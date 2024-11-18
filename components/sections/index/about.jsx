@@ -15,6 +15,7 @@ import CopyBlock from '../../blocks/about.copy.block'
 
 // Section scss
 import about from '../../../styles/sections/index/about.module.scss';
+import css from '../../../styles/structure/footer.module.scss'
 
 /**
  * Section: About
@@ -25,49 +26,66 @@ import about from '../../../styles/sections/index/about.module.scss';
  */
 export default function About() {
 	return (
+		<div className={css.container}>
+			<canvas id="gradient-canvas" className={''} data-transition-in ></canvas>
 		<Section classProp={about.section}>	
 			<Container spacing={['verticalXXXLrg']}>
 				<SectionTitle
-					title="About Me"
-					preTitle="Synopsis"
-					subTitle="With a diverse skill set that includes UX design, UI design, full stack development, operational architecture, systems design, photography, and branding, I am a well-rounded digital professional."
+					title="About ArguAI"
+					subTitle="ArguAI is an AI-powered debate platform that pits two intelligent systems against each other in lively debates. Users provide the topics, and our AIs do the rest—engaging in logical, insightful, and sometimes surprising discussions!"
 				/>
 				<section className={about.content}>
-					<div className={about.image}>
-						<img src="/img/family-photo.jpg" alt="Nelson family photo"/>
-						{/* <Image src="/img/family-photo.jpg" width={600} height={800}/> */}
-					</div>
+
 					<div className={about.copy} >
 						<CopyBlock 
-							title="Softskills that pay the bills"
+							title="Model-Powered Debates"
 							containerClass={about.container}
 							iconClass={about.icon}
-							icon={[ 'fat', 'ear-listen' ]}
-							copy="In addition to my design and technical expertise—I also have strong leadership, time management, and multitasking skills—honed through my experience as a business owner / managing partner, husband, and father of two. Outside of work, I enjoy staying active through sports such as hockey and snowboarding. I am confident in my ability to bring passion and value to any project."
+							icon={[ 'fat', 'robot' ]}
+							copy="ArguAI leverages top-tier models, Meta-Llama-3.1-8B-Instruct hosted on Hypermode and others like GPT-4, GPT-3.5 Turbo etc. to provide the most engaging and insightful debates possible.Each output from a model serves as input for the opposing model, creating a dynamic, flowing debate.
+							Modus, an open-source framework, makes it easy to integrate different AI models and APIs, ensuring smooth communication between the debating models."
+						/>
+						<CopyBlock 
+							title="AI Judge for Deciding the Winner"
+							containerClass={about.container}
+							iconClass={about.icon}
+							icon={[ 'fat', '' ]}
+							copy="The debates are judged by a third AI model, an impartial AI judge that listens to both sides and determines the winner based on the strength of the arguments.
+                                   The AI judge evaluates factors like logical consistency, clarity, and argumentation quality to declare the more persuasive model as the winner."
 						/>
 						<BadgesBlock 
-							title="Reasearch and planning" 
+							title="Custom Personas for Models" 
 							containerClass={about.container}
 							list={methods} 
 							fullContainer="fullContainer"
 							block="methods" 
-							icon="fingerprint"
-							copy="One of my favorite aspects of creating is planning the architecture of a project. From Design Systems to Brand Strategy—I enjoy working with the many touch points of user experience."
+							icon=""
+							copy="Users can apply custom personas to the AI models, shaping their debate style, tone, and approach. Whether you want one model to be more aggressive and another to be calm, the personas ensure that each AI model has a distinct character.
+                                       Personas influence the way models argue, making debates more diverse and interesting."
 							//invertedColor="invertedColor"
 							headerIcon={`${about.icon}`}
+						/>
+						<CopyBlock 
+							title="User-Centered Debate Creation"
+							containerClass={about.container}
+							iconClass={about.icon}
+							icon={[ 'fat', '' ]}
+							copy="Users can select two AI models with specific personas and then provide a debate topic. Once set, the AI models engage in a structured back-and-forth conversation, with the AI judge observing the entire exchange.
+                                     This hands-on approach allows users to create their own custom debates, tailored to their interests or curiosity."
 						/>
 					</div>
 				</section>	
 			</Container>
 		</Section>
+		
+		</div>
+		
 	)
 }
 
 const methods 	= [
-	{ key: 'planet-moon', 		name: 'User Research', 		type: 'fad' },
-	{ key: 'qrcode', 			name: 'Digital Strategy', 	type: 'fad' },
-	{ key: 'window', 			name: 'Design Systems', 	type: 'fad' },
-	{ key: 'cubes', 			name: 'Product Strategy', 	type: 'far' },
-	{ key: 'layer-plus', 		name: 'Brand Strategy', 	type: 'fad' },
-	{ key: 'solar-system', 		name: 'Operations', 		type: 'fad' },
+	{ key: 'planet-moon', 		name: 'pragmatic analyst', 		type: 'fad' },
+	{ key: 'qrcode', 			name: 'visionary idealist', 	type: 'fad' },
+	{ key: 'window', 			name: 'data driven skeptic', 	type: 'fad' },
+	{ key: 'cubes', 			name: 'empathetic humanist', 	type: 'far' },
 ]
