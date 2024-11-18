@@ -1,18 +1,26 @@
 [
 	{
 		"url": "/",
-		"title": "About Me"
+		"title": "ArguAI >|<"
 	},
 	{
 		"url": "/case-studies",
-		"title": "Case Studies"
+		"title": ""
 	},
 	{
 		"url": "/articles",
-		"title": "Articles"
+		"title": ""
 	},
 	{
 		"url": "/projects",
-		"title": "Projects"
+		"title": ""
+	},
+	{
+		"url": "/case-studies",
+		"title": ""
+	},
+	{
+		"url": "/articles",
+		"title": ""
 	}
 ]

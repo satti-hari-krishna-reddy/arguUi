@@ -11,20 +11,20 @@
 	},
 
 	"header": {
-		"name": "Andrew Nelson.",
-		"usp": "I design and build meaningful experiences."
+		"name": "ArguAI.",
+		"usp": "Watch AIs Debate Like Never Before!"
 	},
 
-	"paragraph": "I am a digital polymath — a constantly evolving digital creator driven by a passion for lifelong learning and the desire to leave a lasting impact.",
+	"paragraph": "A platform where AIs challenge each other on topics YOU choose, showcasing the future of critical thinking and argumentation—powered by Modus for seamless AI integration and Hypermode for unparalleled performance.",
 
 	"buttons": {
 		"primary": {
-			"title": "Contact Me",
+			"title": "Try Now ->",
 			"url": "",
 			"leaveSite": false
 		},
 		"secondary": {
-			"title": "LinkedIn",
+			"title": "Modus",
 			"url": "",
 			"leaveSite": "true"
 		}
