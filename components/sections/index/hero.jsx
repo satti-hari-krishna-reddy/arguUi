@@ -33,23 +33,6 @@ export default function Hero() {
 	return (
 		<Section classProp={`${hero.section}`}>
 			<Container spacing={'VerticalXXXL'}>
-				<TypeAnimation className={`${hero.preHeader}`}
-					sequence={[
-						content.intro.startDelay,
-						() => { setTypingStatus('typing') },
-						content.intro.start,
-						() => {	setTypingStatus('typed') },
-						content.intro.deleteDelay,
-						() => {	setTypingStatus('deleting') },
-						content.intro.end,
-						() => {	setTypingStatus('deleted') },
-						content.intro.restartDelay,
-					]}
-					speed={content.intro.speed}
-					deletionSpeed={content.intro.deletionSpeed}
-					wrapper={content.intro.wrapper}
-					repeat={Infinity}
-				/>
 				<section>
 					<h1 className={hero.header}>
 						{content.header.name}
