@@ -14,6 +14,7 @@ import hero 		from '../../../styles/sections/index/hero.module.scss';
 import button 		from '../../../styles/blocks/button.module.scss';
 
 import content		from '../../../content/index/hero.json'
+import Link from 'next/link';
 
 
 /**
@@ -34,9 +35,12 @@ export default function Hero() {
 		<Section classProp={`${hero.section}`}>
 			<Container spacing={'VerticalXXXL'}>
 				<section>
-					<h1 className={hero.header}>
+					{/* <h1 className={hero.header}>
 						{content.header.name}
-						</h1>
+						</h1> */}
+						<Link className={hero.header} href="/chat"  >
+						{content.header.name}
+					</Link>
 					<h1 className={`${hero.header} ${hero.primaryDim}`}>
 						{content.header.usp}
 					</h1>
