@@ -202,3 +202,147 @@ const debateID = uuidv4();  // Generates a unique string UUID
     }
   };
   
+  
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.topSelectors}>
+        <div className={styles.dropdownPair}>
+          <p style={{ marginTop: "5px" }}>Debater 1:</p>
+          <select
+            value={model1}
+            onChange={(e) => setModel1(e.target.value)}
+            className={styles.dropdown}
+          >
+            <option hidden>Select Model</option>
+            <option value="gemini-1-5-flash">Gemini 1.5 Flash</option>
+            <option value="gpt-3-5-turbo" disabled>GPT 3.5 Turbo</option>
+            <option value="gemini-pro">Gemini Pro</option>
+            <option value="gpt-4o-mini" disabled>GPT 4o mini</option>
+            <option value="Meta-Llama-8B" disabled>Meta Llama 8B</option>
+            <option value="gpt-4o" disabled>GPT 4o</option>
+          </select>
+          <select
+            value={persona1}
+            onChange={(e) => setPersona1(e.target.value)}
+            className={styles.dropdown}
+          >
+            <option hidden>Select Persona</option>
+            <option value="pragmatic_analyst">Pragmatic Analyst</option>
+            <option value="visionary_idealist">Visionary Idealist</option>
+            <option value="data_driven_skeptic">Data-driven Skeptic</option>
+            <option value="empathetic_humanist">Empathetic Humanist</option>
+          </select>
+        </div>
+        <div className={styles.dropdownPair}>
+          <p style={{ marginTop: "5px" }}>Debater 2:</p>
+          <select
+            value={model2}
+            onChange={(e) => setModel2(e.target.value)}
+            className={styles.dropdown}
+          >
+            <option hidden>Select Model</option>
+            <option value="gemini-1-5-flash">Gemini 1.5 Flash</option>
+            <option value="gpt-3-5-turbo" disabled>GPT 3.5 Turbo</option>
+            <option value="gemini-pro">Gemini Pro</option>
+            <option value="gpt-4o-mini" disabled>GPT 4o mini</option>
+            <option value="Meta-Llama-8B" disabled>Meta Llama 8B</option>
+            <option value="gpt-4o" disabled>GPT 4o</option>
+          </select>
+          <select
+            value={persona2}
+            onChange={(e) => setPersona2(e.target.value)}
+            className={styles.dropdown}
+          >
+            <option hidden>Select Persona</option>
+            <option value="pragmatic_analyst">Pragmatic Analyst</option>
+            <option value="visionary_idealist">Visionary Idealist</option>
+            <option value="data_driven_skeptic">Data-driven Skeptic</option>
+            <option value="empathetic_humanist">Empathetic Humanist</option>
+          </select>
+        </div>
+      </div>
+
+      <div className={styles.chatBox} ref={chatBoxRef}>
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`${styles.message} ${
+              message.speaker === persona1
+                ? styles.ai1
+                : message.speaker === persona2
+                ? styles.ai2
+                : styles.judge
+            }`}
+          >
+            <div className={styles.messageHeader}>
+              <span className={styles.sender}>
+                {message.speaker}
+              </span>
+            </div>
+            <p className={styles.messageText}>{message.message}</p>
+          </div>
+        ))}
+
+        {isAi1Typing && (
+          <div className={`${styles.message} ${styles.ai1}`}>
+            <div className={styles.typingLoader}>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+            </div>
+          </div>
+        )}
+
+        {isAi2Typing && (
+          <div className={`${styles.message} ${styles.ai2}`}>
+            <div className={styles.typingLoader}>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+            </div>
+          </div>
+        )}
+
+        {isJudgeTyping && (
+          <div className={`${styles.message} ${styles.judge}`}>
+            <div className={styles.typingLoader}>
+              <span>.</span>
+              <span>.</span>
+              <span>.</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {isInputVisible && (
+        <div
+          className={`${styles.messageBox} ${
+            messages.length === 0 ? styles.centered : ""
+          }`}
+        >
+          <input
+            className={styles.chatBox}
+            type="text"
+            placeholder="Enter your debate topic..."
+            value={debateTopic}
+            onChange={(e) => setDebateTopic(e.target.value)}
+          />
+          <button className={styles.sendButton} onClick={handleSendMessage}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="20"
+              height="20"
+            >
+              <path d="M2.01 21L23 12 2.01 3v7l15 2-15 2z" />
+            </svg>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DebateDesign;
