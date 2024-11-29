@@ -15,7 +15,7 @@ import button 		from '../../../styles/blocks/button.module.scss';
 
 import content		from '../../../content/index/hero.json'
 import Link from 'next/link';
-
+import Navbar from '../../layout/navbar';
 
 /**
  * TO DO LIST
@@ -32,15 +32,10 @@ export default function Hero() {
 	const [typingStatus, setTypingStatus] = useState('Initializing');
 
 	return (
+		<> <Navbar />
 		<Section classProp={`${hero.section}`}>
 			<Container spacing={'VerticalXXXL'}>
 				<section>
-					{/* <h1 className={hero.header}>
-						{content.header.name}
-						</h1> */}
-						<Link className={hero.header} href="/chat"  >
-						{content.header.name}
-					</Link>
 					<h1 className={`${hero.header} ${hero.primaryDim}`}>
 						{content.header.usp}
 					</h1>
@@ -51,17 +46,20 @@ export default function Hero() {
 					</p>					
 				</section>
 				<section>
-					<button	className={`button ${button.primary}`}
-							onClick={ () => window.location = 'mailto:hello@andrewnelson.net' } >
-						{content.buttons.primary.title}
-					</button>
+				<button className={`button ${button.primary}`}>
+						<Link style href="/chat">
+							{content.buttons.primary.title}
+						</Link>
+				</button>
+
 					<button className={`button ${button.secondary} leaveSite`}
-							onClick={ ()=> window.open("https://www.linkedin.com/in/--andrewnelson/", "_blank") } >
+							onClick={ ()=> window.open("https://github.com/hypermodeinc/modus", "_blank") } >
 						{content.buttons.secondary.title}
 					</button>
 				</section>
 			</Container>
 			<HeroBg theme="bg-color-1" />
 		</Section>
+		</>
 	)
 }
