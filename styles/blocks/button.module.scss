@@ -1,22 +1,23 @@
 button {
-
 	&.primary {
-		background-color: var(--secondary);
-		color: var(--background);
-
-		&:hover {
-			background-color: var(--secondary-bright);
-		}
+	  background-color: rgba(255, 255, 255, 0.1); /* Pale, almost transparent white */
+	  color: #FFFFFF; /* Ensure text is white at all times */
+  
+	  &:hover {
+		background-color: rgba(255, 255, 255, 0.1); /* Keep the same pale color on hover */
+		color: #FFFFFF; /* Ensure text remains white on hover */
+	  }
 	}
-
+  
 	&.secondary {
-		background-color: transparent;
-		border: 1px solid var(--primary-dark);
-		color: var(--primary);
-
-		&:hover {
-			color: var(--primary-bright);
-			background-color: var(--primary-dark);
-		}
+	  background-color: transparent;
+	  border: 1px solid var(--primary-dark);
+	  color: var(--primary);
+  
+	  &:hover {
+		color: var(--primary-bright);
+		background-color: var(--primary-dark);
+	  }
 	}
-}
+  }
+  
