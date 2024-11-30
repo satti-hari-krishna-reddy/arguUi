@@ -1,58 +1,61 @@
+# Argu UI
 
-<div align="center">
-  <h1>andrewnelson.net | portfolio</h1>
-  <p></p>
-  <img src="https://img.shields.io/badge/stability-beta-blue.svg" alt="Experimental">
-  <img src="https://vercelbadge.vercel.app/api/atlamors/portfolio-theme" alt="Vercel">
-  <img src="https://therealsujitk-vercel-badge.vercel.app/?app=portfolio-theme-jqe0jhmif-atlamors.vercel.app" alt="Vercel Deployed">
-  <img src="https://img.shields.io/github/license/atlamors/portfolio-theme" alt="Liscence">
-  <br><br>
-</div>
+**Argu UI** is the frontend application for the **Argu AI**, a  platform that allows AI models to engage in debates. Users can select debate topics, assign personas to the models, and watch as the AI models present and counter each other's arguments in a series of rounds. The application also includes a unique feature where a third AI model judges the debate to decide the winner.
 
-<img src="https://www.andrewnelson.net/img/preview.png">
+This  UI was used for the **ModusHack Hackathon**, focusing on building a smooth and engaging user experience for interacting with the Argu AI system.
 
-## Updates
-#### Dev Update — July 6th, 2023 🥰
-We have relocated to a beautiful home in the suburbs of Langely, BC. There has been a LOT of work unpacking, organizing, and landscaping to get this home perfect for our two toddlers! I am hoping to resume development of the theme in the next couple months!
+## Table of Contents
 
-On a really interesting note, Webflow has launched a React component export tool. I am considering moving all component design and management over to Webflow for easier tooling for marketing teams and visual designers! 
-#### Dev Update — Feb 13th, 2023 [Updated: March 05th, 2023]
-Jest has been setup, but no progress on building tests has been made. Life is busy atm! 
-#### Dev Update — Feb 10th, 2023
-I am currently taking a short break in development of this theme. I am in the final phases of a job search, and getting ready to move into a bigger place to give some much needed room to my growing family! I am hoping to continue development before the end of next quarter!
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Setup and Installation](#setup-and-installation)
+- [Running the Application](#running-the-application)
+- [About Argu AI](#about-argu-ai)
 
-## This website is still being developed! 🥳
-The porftofolio application has currently hit the Beta phase and is ready to be forked if you are familiar with React and Next. The next release cycle will focus on a better DX—moving from local JSON to MongoDB, setting up Sanity for GUI page editing, Unit Testing with Jest, adding TypeScript, etc.
+## Features
 
-#### Next & App Architecure
-- [ ] Next.js v13 : Waiting for /app/ folder to leave beta
-- [ ] Sanity.io
-
-#### App Architecure & Design Systems
-- [ ] App\Systems\Margins : Continuing to develop Design Token System
-- [ ] App\Systems\Padding : Continuing to develop Design Token System
-
-#### Pages
-- [x] Pages\About
-- [ ] Pages\Case Studies
-- [x] Pages\Articles : API options and connections for Dev.to and HackerNoon not complete
-- [x] Pages\Projects : Single project details page
-
-#### Articles Page
-- [x] Pages\Articles\Medium\API
-- [ ] Pages\Articles\Dev.to\API
-- [ ] Pages\Articles\HackerNoon\API
-
-#### Projects Page
-- [ ] Pages\Projects\Project : Single project details page
+- **Topic and Persona Selection**: Choose debate topics and assign personas to AI models.
+- **Real-Time AI Debates**: Watch as two AI models debate back and forth, each presenting arguments.
+- **Interactive UI**: A modern, user-friendly interface with real-time updates.
 
 
-## Please fork this repo! 🦄
+## Tech Stack
 
-Fork, Install, Editing, and Deploy instructions coming soon(ish)!
-
-This is my first open-source contribution, and it was also a great oppoortunity for me to learn! 
-
-It is my hope that by sharing this project it can give others a chance to enjoy learning Nextjs (and have as much fun as I did), and hopefully brings value to people as a portfolio and networking tool!
+- **Frontend**: 
+  - **Next.js**: A React framework for building server-rendered or statically-exported web applications.
+  - **React**: A JavaScript library for building user interfaces.
 
 
+## Setup and Installation
+
+### Prerequisites
+
+Before running the project, ensure you have the following installed:
+
+- **Node.js** (v16 or higher): [Download Node.js](https://nodejs.org/)
+- **npm** (Node package manager) - It comes with Node.js.
+
+### Cloning the Repository
+
+To get started with the project, clone the repository using Git:
+
+```bash
+git clone https://github.com/satti-hari-krishna-reddy/arguUi
+
+cd argu-ui
+```
+### Install dependencies
+ Run the following command to install the required dependencies:
+
+```
+npm install
+```
+## Running the Application
+Once the dependencies are installed, you can start the development server by running the following command:
+```
+npm run dev
+```
+## About Argu AI
+Argu AI is the backend platform that powers the debate system. It uses AI models to simulate debates between two personas, followed by a third model that judges the arguments and decides the winner. The Argu UI is designed to allow users to interact seamlessly with this AI-powered system, making it easy to choose debate topics, assign AI personas, and view the debate as it unfolds.
+
+#### To access the Argu AI backend repository, visit: https://github.com/satti-hari-krishna-reddy/arguai
