@@ -76,7 +76,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
       };
   
       // Send the GraphQL request
-      const response = await fetch("http://localhost:8686/graphql", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HYP_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +139,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
       // Variables for the query
       const variables = { debateID };
   
-      const response = await fetch("http://localhost:8686/graphql", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HYP_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
