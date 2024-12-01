@@ -55,11 +55,10 @@ export default function Technical() {
 const tech	= [
 	{ key: 'go', 		    name: 'GoLang', 			type: 'devicon' },
 	{ key: 'modus', 		name: 'Modus', 			    type: 'devicon' },
+	{ key: 'azure', 		name: 'Azure Cloud', 		type: 'devicon' },
+	{ key: 'postgres', 		name: 'Postgres SQL', 		type: 'devicon' },
 	{ key: 'javascript', 	name: 'JavaScript', 		type: 'devicon' },
-	{ key: 'nodejs', 		name: 'NodeJS', 			type: 'devicon' },
 	{ key: 'react', 		name: 'React', 				type: 'devicon' },
 	{ key: 'nextjs', 		name: 'NextJS', 			type: 'devicon' },
-	{ key: 'sass', 			name: 'SASS', 				type: 'devicon' },
 	{ key: 'git', 			name: 'Git', 				type: 'devicon' },
-	{ key: 'azure', 		name: 'Azure Cloud', 		type: 'devicon' },
 ]
