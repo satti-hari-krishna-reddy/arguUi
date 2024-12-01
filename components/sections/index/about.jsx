@@ -1,5 +1,3 @@
-// Core packages
-import Image from 'next/image'
 
 // Section structure
 import Section from '../../structure/section';
@@ -7,7 +5,6 @@ import Container from '../../structure/container';
 
 // Section general blocks
 import SectionTitle from '../../blocks/section.title.block'
-import SectionGridBg from '../../blocks/section.grid.block'
 
 // Section specific blocks
 import BadgesBlock from '../../blocks/about.badges.block'
@@ -37,42 +34,45 @@ export default function About() {
 				<section className={about.content}>
 
 					<div className={about.copy} >
-						<CopyBlock 
-							title="Model-Powered Debates"
-							containerClass={about.container}
-							iconClass={about.icon}
-							icon={[ 'fat', 'robot' ]}
-							copy="ArguAI leverages top-tier models, Meta-Llama-3.1-8B-Instruct hosted on Hypermode and others like GPT-4, GPT-3.5 Turbo etc. to provide the most engaging and insightful debates possible.Each output from a model serves as input for the opposing model, creating a dynamic, flowing debate.
-							Modus, an open-source framework, makes it easy to integrate different AI models and APIs, ensuring smooth communication between the debating models."
+					<CopyBlock 
+						title="Model-Powered Debates"
+						containerClass={about.container}
+						iconClass={about.icon}
+						icon={['fat', 'robot']}
+						copy="ArguAI leverages top-tier models, including Meta-Llama-3.1-8B-Instruct hosted on Hypermode, as well as GPT-4, GPT-3.5 Turbo, and others, to deliver the most engaging and insightful debates possible. Each output from one model serves as input for the opposing model, creating a dynamic, flowing debate. 
+						Additionally, Modus, an open-source framework, facilitates the integration of various AI models and APIs, ensuring seamless communication between the debating models."
 						/>
+
 						<CopyBlock 
-							title="AI Judge for Deciding the Winner"
-							containerClass={about.container}
-							iconClass={about.icon}
-							icon={[ 'fat', '' ]}
-							copy="The debates are judged by a third AI model, an impartial AI judge that listens to both sides and determines the winner based on the strength of the arguments.
-                                   The AI judge evaluates factors like logical consistency, clarity, and argumentation quality to declare the more persuasive model as the winner."
+						title="AI Judge for Deciding the Winner"
+						containerClass={about.container}
+						iconClass={about.icon}
+						icon={['fat', '']}
+						copy="The debates are judged by a third AI model — an impartial AI judge that listens to both sides and determines the winner based on the strength of the arguments. 
+						The AI judge evaluates factors like logical consistency, clarity, and argumentation quality to declare the more persuasive model as the winner."
 						/>
+
 						<BadgesBlock 
-							title="Custom Personas for Models" 
-							containerClass={about.container}
-							list={methods} 
-							fullContainer="fullContainer"
-							block="methods" 
-							icon=""
-							copy="Users can apply custom personas to the AI models, shaping their debate style, tone, and approach. Whether you want one model to be more aggressive and another to be calm, the personas ensure that each AI model has a distinct character.
-                                       Personas influence the way models argue, making debates more diverse and interesting."
-							//invertedColor="invertedColor"
-							headerIcon={`${about.icon}`}
+						title="Custom Personas for Models" 
+						containerClass={about.container}
+						list={methods} 
+						fullContainer="fullContainer"
+						block="methods" 
+						icon=""
+						copy="Users can apply custom personas to the AI models, shaping their debate style, tone, and approach. Whether you want one model to be more aggressive and another to be calm, the personas ensure that each AI model has a distinct character. 
+						These personas influence how the models argue, making debates more diverse, engaging, and interesting."
+						headerIcon={`${about.icon}`}
 						/>
+
 						<CopyBlock 
-							title="User-Centered Debate Creation"
-							containerClass={about.container}
-							iconClass={about.icon}
-							icon={[ 'fat', '' ]}
-							copy="Users can select two AI models with specific personas and then provide a debate topic. Once set, the AI models engage in a structured back-and-forth conversation, with the AI judge observing the entire exchange.
-                                     This hands-on approach allows users to create their own custom debates, tailored to their interests or curiosity."
+						title="User-Centered Debate Creation"
+						containerClass={about.container}
+						iconClass={about.icon}
+						icon={['fat', '']}
+						copy="Users can select two AI models with specific personas and provide a debate topic. Once set, the AI models engage in a structured back-and-forth conversation, with the AI judge observing the entire exchange. 
+						This hands-on approach allows users to create their own custom debates, tailored to their interests or curiosity."
 						/>
+
 					</div>
 				</section>	
 			</Container>
