@@ -1,156 +1,171 @@
-import { useEffect, useState } from 'react'
-import {useRouter} from 'next/router';
-import Link from 'next/link'
-import ThemeMode from '../utils/theme.util'
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import ThemeMode from '../utils/theme.util';
 
-import settings from '../../content/_settings.json'
-import content  from '../../content/navbar.json'
-import css from '../../styles/structure/navbar.module.scss'
+import settings from '../../content/_settings.json';
+import content from '../../content/navbar.json';
+import css from '../../styles/structure/navbar.module.scss';
 
 export default function Navbar() {
+  const router = useRouter();
 
-	const router = useRouter()
+  const [menuState, menuToggle] = useState();
 
-	const [ menuState, menuToggle ] = useState()
+  useEffect(() => {
+    menuToggle(false);
+  }, []);
 
-	useEffect( () => {
-		menuToggle(false)
-	}, [] )
+  useEffect(() => {
+    class RouteEvents {
+      constructor() {
+        console.log(
+          '%c☰  Navigation Router Events Loaded',
+          'background: #060708; color: #fff; padding: .125rem .75rem; border-radius: 5px; font-weight: 900; ',
+        );
+        this.addEventListeners();
+      }
 
-	useEffect( () => {
-		class RouteEvents {
+      closeMenu() {
+        menuToggle(false);
+      }
 
-			constructor() {
-				console.log(
-					'%c☰  Navigation Router Events Loaded', 
-					'background: #060708; color: #fff; padding: .125rem .75rem; border-radius: 5px; font-weight: 900; '
-				)
-				this.addEventListeners()
-			}
+      addEventListeners() {
+        router.events.on('routeChangeComplete', this.closeMenu);
+      }
 
-			closeMenu() {
-				menuToggle(false)
-			}
+      removeEventListeners() {
+        router.events.off('routeChangeComplete', this.closeMenu);
+      }
+    }
 
-			addEventListeners() {
-				router.events.on('routeChangeComplete', this.closeMenu)
-			}
+    const routeEvents = new RouteEvents();
 
-			removeEventListeners() {
-				router.events.off('routeChangeComplete', this.closeMenu)
-			}
-		}
+    return () => {
+      routeEvents.removeEventListeners();
+    };
+  }, [router.events]);
 
-		const routeEvents = new RouteEvents
+  useEffect(() => {
+    class ScrollEvents {
+      constructor() {
+        console.log(
+          '%c▼  Navigation Scroll Events Loaded',
+          'background: #060708; color: #fff; padding: .125rem .75rem; border-radius: 5px; font-weight: 900; ',
+        );
 
-		return () => {
-			routeEvents.removeEventListeners()
-		}
-	}, [router.events] )
+        window.sticky = {};
+        window.sticky.nav = document.querySelector(`nav`);
 
-	useEffect( () => {
+        this.addEventListeners();
+      }
 
-		class ScrollEvents {
+      addEventListeners() {
+        if (window.sticky.nav) {
+          window.addEventListener('DOMContentLoaded', this.maybeHideNav, false);
+          document.addEventListener('scroll', this.maybeHideNav, false);
+        }
+      }
 
-			constructor() {
-				console.log(
-					'%c▼  Navigation Scroll Events Loaded', 
-					'background: #060708; color: #fff; padding: .125rem .75rem; border-radius: 5px; font-weight: 900; '
-				)
+      removeEventListeners() {
+        if (window.sticky.nav) {
+          window.removeEventListener(
+            'DOMContentLoaded',
+            this.maybeHideNav,
+            false,
+          );
+          document.removeEventListener('scroll', this.maybeHideNav, false);
+        }
+      }
 
-				window.sticky		= {}
-				window.sticky.nav	= document.querySelector(`nav`)
+      getPosition(e = null, top = true) {
+        let offset;
 
-				this.addEventListeners()
-			}
+        if (!e) return;
 
-			addEventListeners() {
-				if ( window.sticky.nav ) {
-					window.addEventListener('DOMContentLoaded', this.maybeHideNav, false)
-					document.addEventListener('scroll', this.maybeHideNav, false)
-				}
-			}
+        if (top) {
+          offset =
+            e.getBoundingClientRect().top +
+            document.documentElement.scrollTop -
+            window.sticky.nav.at;
+          return offset;
+        } else {
+          offset =
+            e.getBoundingClientRect().bottom +
+            document.documentElement.scrollTop -
+            window.sticky.nav.at;
+          return offset;
+        }
+      }
 
-			removeEventListeners() {
-				if ( window.sticky.nav ) {
-					window.removeEventListener('DOMContentLoaded', this.maybeHideNav, false)
-					document.removeEventListener('scroll', this.maybeHideNav, false)
-				}
-			}
+      maybeHideNav() {
+        const nC = window.sticky.nav.classList;
+        const hiddenAt = window.innerHeight / 2;
 
-			getPosition( e = null, top = true ) {
-				let offset
+        if (
+          window.scrollY > this.lastY &&
+          window.scrollY > hiddenAt &&
+          !nC.contains(css.hidden)
+        ) {
+          nC.add(css.hidden);
+        } else if (window.scrollY < this.lastY && nC.contains(css.hidden)) {
+          nC.remove(css.hidden);
+        }
 
-				if ( !e ) return
+        this.lastY = window.scrollY;
+      }
+    }
 
-				if ( top ) {
-					offset = e.getBoundingClientRect().top + document.documentElement.scrollTop - window.sticky.nav.at
-					return offset
-				} else {
-					offset = e.getBoundingClientRect().bottom + document.documentElement.scrollTop - window.sticky.nav.at
-					return offset
-				}	
-			}
+    const scrollEvents = new ScrollEvents();
 
-			maybeHideNav() {
+    return () => {
+      scrollEvents.removeEventListeners();
+    };
+  }, []);
 
-				const nC 		= window.sticky.nav.classList
-				const hiddenAt	= ( window.innerHeight / 2 )
+  const toggleMenu = () => {
+    let bool = !menuState;
+    menuToggle(bool);
+  };
 
-				if ( window.scrollY > this.lastY && window.scrollY > hiddenAt && ! nC.contains( css.hidden ) ) {
-					nC.add( css.hidden )
-				} else if ( window.scrollY < this.lastY && nC.contains( css.hidden ) ) {
-					nC.remove( css.hidden )
-				}
-
-				this.lastY = window.scrollY
-			}
-		}
-
-		const scrollEvents = new ScrollEvents
-
-		return () => {
-			scrollEvents.removeEventListeners()
-		}
-	}, [] )
-
-	const toggleMenu = () => {
-		let bool = ! menuState
-		menuToggle(bool)
-	}
-
-	return (
-		<nav id="Navbar" className={css.container}>
-			<ul className={css.menu}>
-				<li className={css.menuHeader}>
-					<Link className={css.logo} href="/"  >
-						{settings.name}
-					</Link>
-					<button onClick={toggleMenu} className={css.mobileToggle} data-open={menuState}>
-						<div>
-							<span></span>
-							<span></span>
-						</div>
-					</button>
-				</li>
-				<li data-open={menuState} className={css.menuContent}>
-					<ul>
-						{
-						content.map( ({ url, title }, index) => {
-							return (
-								<li key={index}>
-									<Link href={url}>{title}</Link>
-								</li>
-							)
-						})	
-						}
-						<li>
-							<ThemeMode />
-						</li>
-					</ul>
-				</li>
-			</ul>
-			<span onClick={toggleMenu} className={css.menuBlackout} data-open={menuState}></span>
-		</nav>
-	)
+  return (
+    <nav id="Navbar" className={css.container}>
+      <ul className={css.menu}>
+        <li className={css.menuHeader}>
+          <Link className={css.logo} href="/">
+            {settings.name}
+          </Link>
+          <button
+            onClick={toggleMenu}
+            className={css.mobileToggle}
+            data-open={menuState}
+          >
+            <div>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+        </li>
+        <li data-open={menuState} className={css.menuContent}>
+          <ul>
+            {content.map(({ url, title }, index) => {
+              return (
+                <li key={index}>
+                  <Link href={url}>{title}</Link>
+                </li>
+              );
+            })}
+            <li>
+              <ThemeMode />
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <span
+        onClick={toggleMenu}
+        className={css.menuBlackout}
+        data-open={menuState}
+      ></span>
+    </nav>
+  );
 }

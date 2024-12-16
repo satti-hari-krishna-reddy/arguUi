@@ -1,37 +1,38 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import styles from "../../styles/structure/chatInterface.module.scss";
+import styles from '../../styles/structure/chatInterface.module.scss';
 
 const DebateDesign = () => {
   const [messages, setMessages] = useState([]);
-  const [debateTopic, setDebateTopic] = useState("");
+  const [debateTopic, setDebateTopic] = useState('');
   const [isInputVisible, setIsInputVisible] = useState(true);
   const [isAi1Typing, setIsAi1Typing] = useState(false);
   const [isAi2Typing, setIsAi2Typing] = useState(false);
   const [isJudgeTyping, setIsJudgeTyping] = useState(false);
   const [pollingError, setPollingError] = useState(false);
-  const [model1, setModel1] = useState("");
-  const [persona1, setPersona1] = useState("");
-  const [model2, setModel2] = useState("");
-  const [persona2, setPersona2] = useState("");
+  const [model1, setModel1] = useState('');
+  const [persona1, setPersona1] = useState('');
+  const [model2, setModel2] = useState('');
+  const [persona2, setPersona2] = useState('');
   const chatBoxRef = useRef(null);
   const pollingInterval = useRef(null);
 
-const debateID = uuidv4();  // Generates a unique string UUID
-
+  const debateID = uuidv4(); // Generates a unique string UUID
 
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTo({
         top: chatBoxRef.current.scrollHeight,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   }, [messages, isAi1Typing, isAi2Typing, isJudgeTyping]);
 
   const validateInputs = () => {
     if (!model1 || !persona1 || !model2 || !persona2 || !debateTopic.trim()) {
-      alert("Please fill all fields: model1, persona1, model2, persona2, and debate topic.");
+      alert(
+        'Please fill all fields: model1, persona1, model2, persona2, and debate topic.',
+      );
       return false;
     }
     return true;
@@ -41,7 +42,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
     try {
       // Start polling immediately after making the API call
       startPolling();
-  
+
       // Construct the GraphQL mutation query
       const query = `
       query StartDebate(
@@ -65,7 +66,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
         }
       }
     `;
-  
+
       const variables = {
         debateID,
         model1,
@@ -74,52 +75,56 @@ const debateID = uuidv4();  // Generates a unique string UUID
         persona2,
         debateTopic,
       };
-  
+
       // Send the GraphQL request
       const response = await fetch(`${process.env.NEXT_PUBLIC_HYP_URL}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query, variables }),
       });
-  
+
       const result = await response.json();
-  
+
       if (result.data?.startDebate?.success) {
-        console.log("Debate completed successfully");
+        console.log('Debate completed successfully');
       } else {
-        throw new Error(result.data?.startDebate?.message || "Failed to start the debate");
+        throw new Error(
+          result.data?.startDebate?.message || 'Failed to start the debate',
+        );
       }
     } catch (error) {
       console.error(error);
-  
+
       // Stop polling on error
       clearInterval(pollingInterval.current);
-  
+
       // Set error state and update the conversation
       setPollingError(true);
       setMessages((prev) => [
         ...prev,
-        { speaker: "Judge", text: "Error: Debate interrupted!", timestamp: new Date().toISOString() },
+        {
+          speaker: 'Judge',
+          text: 'Error: Debate interrupted!',
+          timestamp: new Date().toISOString(),
+        },
       ]);
     }
   };
-  
-  
+
   const handleSendMessage = () => {
     if (validateInputs()) {
       setIsInputVisible(false);
-      submitDebate(); 
+      submitDebate();
     }
   };
-  
 
   const startPolling = () => {
     setPollingError(false);
     pollingInterval.current = setInterval(fetchMessages, 1200); // Start polling every second
   };
-  
+
   let offset = 0; // Initialize offset
 
   const fetchMessages = async () => {
@@ -128,43 +133,43 @@ const debateID = uuidv4();  // Generates a unique string UUID
       if (offset === 0 && messages.length === 0) {
         setIsAi1Typing(true);
       }
-  
+
       // Define the new GraphQL query
       const query = `
       query CurrentConversation($debateID: String!) {
         currentConversation(debateID: $debateID)
       }
-    `;    
-  
+    `;
+
       // Variables for the query
       const variables = { debateID };
-  
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_HYP_URL}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ query, variables }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-  
+
         // Extract and process new messages
         const parsedMessages = JSON.parse(data.data.currentConversation);
         if (parsedMessages.length > offset) {
           const newMessages = parsedMessages.slice(offset);
           offset = parsedMessages.length; // Update offset
-  
+
           // Update the messages state with new messages
           setMessages((prev) => [...prev, ...newMessages]);
-  
+
           // Handle typing states based on the last message
           const lastMessage = newMessages[newMessages.length - 1];
           setIsAi1Typing(false);
           setIsAi2Typing(false);
           setIsJudgeTyping(false);
-  
+
           if (parsedMessages.length === 8) {
             setIsJudgeTyping(true);
           } else if (lastMessage.speaker === persona1) {
@@ -172,7 +177,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
           } else if (lastMessage.speaker === persona2) {
             setIsAi1Typing(true);
           }
-  
+
           // Stop polling if all 9 messages are received
           if (parsedMessages.length >= 9) {
             clearInterval(pollingInterval.current);
@@ -189,26 +194,28 @@ const debateID = uuidv4();  // Generates a unique string UUID
           }
         }
       } else {
-        throw new Error("Failed to fetch messages");
+        throw new Error('Failed to fetch messages');
       }
     } catch (error) {
       // Handle errors and stop polling
       setPollingError(true);
       setMessages((prev) => [
         ...prev,
-        { speaker: "Judge", text: "Error: Debate interrupted!", timestamp: new Date().toISOString() },
+        {
+          speaker: 'Judge',
+          text: 'Error: Debate interrupted!',
+          timestamp: new Date().toISOString(),
+        },
       ]);
       clearInterval(pollingInterval.current);
     }
   };
-  
-  
 
   return (
     <div className={styles.container}>
       <div className={styles.topSelectors}>
         <div className={styles.dropdownPair}>
-          <p style={{ marginTop: "5px" }}>Debater 1:</p>
+          <p style={{ marginTop: '5px' }}>Debater 1:</p>
           <select
             value={model1}
             onChange={(e) => setModel1(e.target.value)}
@@ -216,11 +223,19 @@ const debateID = uuidv4();  // Generates a unique string UUID
           >
             <option hidden>Select Model</option>
             <option value="gemini-1-5-flash">Gemini 1.5 Flash</option>
-            <option value="gpt-3-5-turbo" disabled>GPT 3.5 Turbo</option>
+            <option value="gpt-3-5-turbo" disabled>
+              GPT 3.5 Turbo
+            </option>
             <option value="gemini-pro">Gemini Pro</option>
-            <option value="gpt-4o-mini" disabled>GPT 4o mini</option>
-            <option value="Meta-Llama-8B" disabled>Meta Llama 8B</option>
-            <option value="gpt-4o" disabled>GPT 4o</option>
+            <option value="gpt-4o-mini" disabled>
+              GPT 4o mini
+            </option>
+            <option value="Meta-Llama-8B" disabled>
+              Meta Llama 8B
+            </option>
+            <option value="gpt-4o" disabled>
+              GPT 4o
+            </option>
           </select>
           <select
             value={persona1}
@@ -235,7 +250,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
           </select>
         </div>
         <div className={styles.dropdownPair}>
-          <p style={{ marginTop: "5px" }}>Debater 2:</p>
+          <p style={{ marginTop: '5px' }}>Debater 2:</p>
           <select
             value={model2}
             onChange={(e) => setModel2(e.target.value)}
@@ -243,11 +258,19 @@ const debateID = uuidv4();  // Generates a unique string UUID
           >
             <option hidden>Select Model</option>
             <option value="gemini-1-5-flash">Gemini 1.5 Flash</option>
-            <option value="gpt-3-5-turbo" disabled>GPT 3.5 Turbo</option>
+            <option value="gpt-3-5-turbo" disabled>
+              GPT 3.5 Turbo
+            </option>
             <option value="gemini-pro">Gemini Pro</option>
-            <option value="gpt-4o-mini" disabled>GPT 4o mini</option>
-            <option value="Meta-Llama-8B" disabled>Meta Llama 8B</option>
-            <option value="gpt-4o" disabled>GPT 4o</option>
+            <option value="gpt-4o-mini" disabled>
+              GPT 4o mini
+            </option>
+            <option value="Meta-Llama-8B" disabled>
+              Meta Llama 8B
+            </option>
+            <option value="gpt-4o" disabled>
+              GPT 4o
+            </option>
           </select>
           <select
             value={persona2}
@@ -271,14 +294,12 @@ const debateID = uuidv4();  // Generates a unique string UUID
               message.speaker === persona1
                 ? styles.ai1
                 : message.speaker === persona2
-                ? styles.ai2
-                : styles.judge
+                  ? styles.ai2
+                  : styles.judge
             }`}
           >
             <div className={styles.messageHeader}>
-              <span className={styles.sender}>
-                {message.speaker}
-              </span>
+              <span className={styles.sender}>{message.speaker}</span>
             </div>
             <p className={styles.messageText}>{message.message}</p>
           </div>
@@ -318,7 +339,7 @@ const debateID = uuidv4();  // Generates a unique string UUID
       {isInputVisible && (
         <div
           className={`${styles.messageBox} ${
-            messages.length === 0 ? styles.centered : ""
+            messages.length === 0 ? styles.centered : ''
           }`}
         >
           <input
